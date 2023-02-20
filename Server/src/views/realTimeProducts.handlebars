@@ -1,0 +1,52 @@
+<body>
+    <div id="root">
+        <nav class="navBar shadow" style="top: 0px; background: white;">
+            <ul>
+                <li><a class="linkNav" href="/home" style="color: black;">
+                        <div class="logo">
+                            <h3>A</h3>
+                        </div>
+                    </a></li>
+                <li class="page"><a class="linkNav" href="/Cuadros" style="color: black;">Cuadros</a></li>
+                <li class="page"><a class="linkNav" href="/Blog" style="color: black;">Blog</a></li>
+                <div class="avatar">H</div>
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="subContainer">
+                <div class="cardContainer">
+                    {{#each products}}
+                    <div class="card">
+                        <div class="contentCard">
+                            <div class="contentImg">
+                                <img src="{{this.thumbnail}}">
+                            </div>
+                            <div class="cardDetail">
+                                <div class="cardTitle">
+                                    <h4>{{this.title}}</h4>
+                                </div><span>$ {{this.price}}</span><button data-id="{{this.id}}"
+                                    class="btn add">agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <div class"pagination">
+                    <ul class="pagination">
+                        <li>
+                            <a{{#if pages.prevLink}} href="{{this.pages.prevLink}}" {{else}} href="" {{/if}}>
+                                << antes</a>
+                        </li>
+                        <li>{{pages.page}}</li>
+                        <li>
+                            <a{{#if pages.nextLink}} href="{{this.pages.nextLink}}" {{else}} href="" {{/if}}>
+                                siguiente>></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/realTimeProducts.js"></script>
+</body>

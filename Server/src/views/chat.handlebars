@@ -1,0 +1,29 @@
+<div class="chat">
+
+  <div class="joinScreen">
+    <!- form del email del usuario -->
+      <form id="formEmail">
+        <h3>porfavor ingrese el email con el cual esta resgistrado</h3>
+        <input type="email" id="userEmail" placeholder="userEmail@test.com" name="userEmail">
+        <span class="validate"></span>
+        <button type="submit" id="sendEmail">Enviar</button>
+      </form>
+  </div>
+
+  <div class="chatScreen">
+    <div class="chatBox">
+    </div>
+    <!- form del mensaje del usuario -->
+      <form id="formMessage">
+        <div class="formMessage">
+          <textarea type="text" id="userMessage" placeholder="Escribe tu mensaje..." name="userMessage"></textarea>
+          <button type="submit" id="sendMessage">Enviar</button>
+        </div>
+      </form>
+  </div>
+
+</div>
+
+<!- script -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/chat.js"></script>
