@@ -1,0 +1,113 @@
+/* :root{
+    --color:mediumslateblue;
+} */
+.chat{
+    width: 100%;
+    height: 100vh;
+    background: rgb(250, 249, 244);
+}
+/*LOGIN */
+.joinScreen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#formEmail{
+    width: 50%;
+    height: 50%;
+    background: lavender;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+}
+
+#userEmail{
+width: 60%;
+background: none;
+border: none;
+border-bottom: 3px solid rgb(250, 249, 244);
+height: 1.5em;
+margin-top: 2em;
+}
+#sendEmail{
+    width: 60%;
+    height: 2em;
+    background-color: mediumslateblue;
+    font-weight: bold;
+    color: rgb(250, 249, 244);
+    border-radius: 2px;
+    border: none;
+    margin-top: 2em;
+}
+
+.validate{
+    display: none;
+    height: 1px;
+    width: 60%;
+    font-size: 14px;
+}
+
+/*CHAT*/
+
+.chatScreen{
+    display: none;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
+    height: 100vh;
+    background-color: lavender;
+}
+.chatBox{
+    width: 80%;
+    height: 90%;
+    background: rgb(250, 249, 244);
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+   
+}
+#formMessage{
+display: flex;
+flex-direction: row;
+width: 80%;
+height: 10%;
+}
+.formMessage{
+    display: flex;
+flex-direction: row;
+width: 100%;
+height: 100%;
+padding: 1em;
+padding-left: 0;
+}
+#userMessage{
+    width: 90%;
+    padding: .5em;
+    resize: none;
+    margin-right: 1em;
+}
+#sendMessage{
+    width: 10%;
+    background-color: mediumslateblue;
+    border-radius: 2px;
+    border: none;
+    font-weight: bold;
+    color: rgb(250, 249, 244);
+}
+/*MESSAGES*/
+.message{
+    padding: .5em;
+    border-radius: 5px;
+}
+.own{
+    background:rgb(177, 166, 243); ;
+    align-self:flex-end ;
+}
+.other{
+    background: rgb(216, 213, 238);
+    align-self:flex-start ;
+}
