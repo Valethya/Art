@@ -1,5 +1,5 @@
-import React, { Children } from "react";
+import React from "react";
 
-export default function Button() {
-  return <button className="btn">agregar</button>;
+export default function Button({ children }) {
+  return <button className="btn">{children}</button>;
 }

@@ -17,39 +17,31 @@
         justify-content: space-around;
         align-items: center;
         li{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.1rem;
             list-style: none;
-            &::after{
-                content:"" ;
-                display: block;
-                width: 0%;
-                height: 1px;
-                // background-color:white;
-                background-color: $primary-color-light;
-        
-            }
-           
+            width: calc(100%*.5);
+            transition: 1s;
         }
-        .page:hover::after{
-            animation: paint .5s linear forwards;
+        .page:hover{
+            letter-spacing: .5em;
         }
+        .liAvatar{
+            justify-content: end;
+        }
+      
     }
 
     .linkNav{
         text-decoration: none;
-        color: white;
+        color:#000;
     }
 
 }
 
-@keyframes paint {
-    0%{
-    width: 0px;
-    }
-    100%{
-        width: calc(100% + 50px);
-    }
-}
+
 
 
 

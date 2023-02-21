@@ -68,6 +68,8 @@ margin-top: 2em;
     display: flex;
     flex-direction: column;
     padding: 2em;
+    overflow-y: auto;
+    scroll-behavior: smooth;
    
 }
 #formMessage{
@@ -102,6 +104,9 @@ padding-left: 0;
 .message{
     padding: .5em;
     border-radius: 5px;
+}
+.message p{
+    margin: 0;
 }
 .own{
     background:rgb(177, 166, 243); ;

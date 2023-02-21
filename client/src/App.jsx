@@ -6,6 +6,7 @@ import "./assets/style/main.scss";
 import Header from "../components/NavBar/Header";
 import CardContainer from "../components/Container/CardContainer";
 import Container from "../components/Container/Container";
+import Cart from "../components/Cart/Cart";
 function App() {
   return (
     <Router>
@@ -13,9 +14,23 @@ function App() {
 
       <StrictMode>
         <Routes>
-          <Route path="/home" element={<Header />}></Route>
-          <Route path="/cuadros" element={<Container />}></Route>
-          <Route path="" element={<></>}></Route>
+          <Route path="/" element={<Header />}></Route>
+          <Route
+            path="/cuadros"
+            element={
+              <Container>
+                <CardContainer />
+              </Container>
+            }
+          ></Route>
+          <Route
+            path="/cart"
+            element={
+              <Container>
+                <Cart />
+              </Container>
+            }
+          ></Route>
         </Routes>
       </StrictMode>
     </Router>

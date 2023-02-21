@@ -157,7 +157,7 @@ export default function Card() {
             </div>
             <span>$ {prod.price}</span>
 
-            <Button></Button>
+            <Button>Agregar</Button>
           </div>
         </div>
       </div>

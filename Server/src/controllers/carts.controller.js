@@ -1,6 +1,5 @@
 import { Router } from "express";
 import cartsManager from "../dao/MongoManager/carts.mongoManager.js";
-import io from "../app.js";
 
 const router = Router();
 
@@ -29,6 +28,7 @@ router.get("/:cid", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const response = await carts.create();
+
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });
