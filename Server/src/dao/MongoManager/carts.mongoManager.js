@@ -19,9 +19,7 @@ export default class cartsManager {
   //encuentra un carrito por su id
   async findById(cid) {
     try {
-      const cart = await cartsModel
-        .findOne({ _id: cid })
-        .populate("products.product");
+      const cart = await cartsModel.findOne({ _id: cid });
 
       if (cart == null) {
         throw new Error({

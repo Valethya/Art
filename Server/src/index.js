@@ -2,10 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import __dirname from "./utils.js";
 import router from "./router/index.js";
-import handlebars from "express-handlebars";
+import Handlebars from "handlebars";
+import expressHandlebars from "express-handlebars";
 import { pass } from "./config/index.js";
 import cors from "cors";
-
+import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access";
 export const app = express();
 
 app.use(express.json());
@@ -16,7 +17,12 @@ app.use(
   })
 );
 
-app.engine("handlebars", handlebars.engine());
+app.engine(
+  "handlebars",
+  expressHandlebars.engine({
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("views", __dirname + "/views");
 app.set(express.static);
 app.use(express.static(__dirname + "/public"));

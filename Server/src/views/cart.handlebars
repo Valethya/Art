@@ -1,0 +1,44 @@
+<nav class="navBar shadow" style="top: 0px; background: white;">
+    <ul>
+        <li><a class="linkNav" href="/">
+                <div class="logo">
+                    <h3>A</h3>
+                </div>
+            </a></li>
+        <li class="page"><a class="linkNav" href="/products">Cuadros</a></li>
+        <li class="page"><a class="linkNav" href="/Blog">Blog</a></li>
+        <li class="liAvatar">
+            <div class="avatar">H</div>
+        </li>
+        <li class="iconCart"><a href="#"><i class="material-icons">shopping_cart</i></a>
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    <div class="subContainer">
+        <div class="cart">
+            <div class="itemListCart">
+                {{#each products}}
+                <div class="itemCart shadow">
+                    <div class="imgCart"><img src="{{this.product.thumbnail}}">
+                    </div>
+                    <div class="cartDetail">
+                        <h4><b>{{this.product.title}}</b></h4>
+                        <p>cantidad: {{this.qty}}</p>
+                        <p>precio: ${{this.product.price}} </p>
+                        <p>total: $ </p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="purchaseDetail shadow">
+                <div>
+                    <h2>Detalles de tu compra</h2>
+                    <p>Total de prodcutos:</p>
+                    <p>Valor total:</p><button class="btn">Finalizar compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module" src="/js/cart.js"></script>
