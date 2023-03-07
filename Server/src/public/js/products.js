@@ -3,7 +3,7 @@ const cardContainer = document.querySelector(".cardContainer");
 cardContainer.addEventListener("click", async (e) => {
   if (e.target.classList.contains("add")) {
     const idProd = e.target.getAttribute("data-id");
-    const idCart = "63f293aad6a291d75d03c98f";
+    const idCart = "6404e70c154f3dc9e3f4fbfd";
 
     const url = `http://localhost:8080/api/carts/${idCart}/product/${idProd}`;
     try {

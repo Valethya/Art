@@ -1,6 +1,5 @@
 import productsModel from "../models/products.model.js";
 import fs from "fs";
-import { request } from "http";
 
 export default class productManager {
   //METODOS PARA PRODUCTOS
@@ -62,11 +61,13 @@ export default class productManager {
       const status = req.query.status;
       const category = req.query.category;
       const title = req.query.title;
-      const query =
-        (status && { status: status }) ||
-        (category && { category: category }) ||
-        (title && { title: title }) ||
-        {};
+      const query = status
+        ? { status: status }
+        : category
+        ? { category: category }
+        : title
+        ? { title: title }
+        : {};
 
       const options = {
         page: req.query.page || 1,

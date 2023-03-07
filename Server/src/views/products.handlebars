@@ -7,12 +7,18 @@
             </a></li>
         <li class="page"><a class="linkNav" href="#">Cuadros</a></li>
         <li class="page"><a class="linkNav" href="/Blog">Blog</a></li>
-        <li class="liAvatar">
-            <div class="avatar">H</div>
+
+        <li class="iconCart"><a href="/cart/6404e70c154f3dc9e3f4fbfd"><i class="material-icons">shopping_cart</i></a>
         </li>
-        <li class="iconCart"><a href="/cart/63f293aad6a291d75d03c98f"><i class="material-icons">shopping_cart</i></a>
+        <li class="liAvatar">
+            <div class="avatar"></div>
+            <div class="user">
+                <span class="rolRendered"></span>
+                <span class="logout"></span>
+            </div>
         </li>
     </ul>
+
 </nav>
 <div class="container">
     <div class="subContainer">
@@ -36,12 +42,14 @@
         <div class"pagination">
             <ul class="pagination">
                 <li>
-                    <a{{#if pages.prevLink}} href="{{this.pages.prevLink}}" {{else}} href="" {{/if}}>
+                    <a{{#if pages.prevLink}} href="{{this.pages.prevLink}}" {{else}} style="visibility:hidden;" href=""
+                        {{/if}}>
                         << antes</a>
                 </li>
                 <li>{{pages.page}}</li>
                 <li>
-                    <a{{#if pages.nextLink}} href="{{this.pages.nextLink}}" {{else}} href="" {{/if}}>
+                    <a{{#if pages.nextLink}} href="{{this.pages.nextLink}}" {{else}} style="visibility:hidden;" href=""
+                        {{/if}}>
                         siguiente>></a>
                 </li>
             </ul>

@@ -59,8 +59,6 @@ router.delete("/", async (req, res) => {
 router.post("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
-    // io.on("addProduct", data);
-    console.log(cid, pid, "esto es cid y pid");
     // const prodId = pid || data;
     const response = await carts.addProdToCart(cid, pid);
 
@@ -97,7 +95,7 @@ router.delete("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
     const response = await carts.deleteAllProducts(cid);
-    res.json({ response: response });
+    res.json({ result: succes, payload: response });
   } catch (error) {
     res.json({ error: error.message });
   }

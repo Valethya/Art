@@ -45,6 +45,7 @@ p {margin-bottom: 1rem;}
     max-height: 55px;
     transition: 1s;
     z-index: 1000;
+    justify-content: flex-end;
 }
 .logo {
     display: flex;
@@ -55,7 +56,8 @@ p {margin-bottom: 1rem;}
     margin: 0;
 }
 .navBar ul {
-    width: 100%;
+   width: 100%;
+    min-width: 70%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -70,9 +72,9 @@ p {margin-bottom: 1rem;}
             width: calc(100%*.5);
             transition: 1s;
 }
-.navBar ul .liAvatar{
+/* .navBar ul .liAvatar{
     justify-content: end;
-}
+} */
 
 .pagination{
     width: 100%;
@@ -100,6 +102,9 @@ a{
     background: #ffe082;
     border-radius: 50%;
 }
+.avatar a{
+  display: flex;
+}
 .container {
     display: flex;
     justify-content: center;
@@ -126,4 +131,29 @@ a{
 
 .shadow {
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+}
+
+input{
+width: 100%;
+border: none;
+border-bottom: 1px solid rgba(128, 128, 128, 0.425);
+margin-bottom: 1em;
+}
+input:focus-visible {
+  outline:none;
+}
+.rolRendered{
+  margin: 1em;
+  visibility: visible;
+  font-size: 14px;
+  text-align: left;
+}
+span{
+  display: flex;
+}
+.user{
+  display: flex;
+  min-width: 20%;
+  justify-content: space-evenly;
+  align-items: center;
 }

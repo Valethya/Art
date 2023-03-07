@@ -11,6 +11,8 @@ let email = "";
 //SCREENS
 const joinScreen = document.querySelector(".joinScreen");
 const chatScreen = document.querySelector(".chatScreen");
+//BTN
+const sendMessage = document.querySelector("#sendMessage");
 
 const emailRegex =
   /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i;
@@ -18,7 +20,6 @@ const emailRegex =
 formEmail.addEventListener("submit", async (event) => {
   event.preventDefault();
   const input = inputEmail.value.trim();
-  console.log(input.length, "esto es un input");
   if (input.length <= 0) {
     errorMessage.style.display = "flex";
     errorMessage.style.color = "rgb(255, 103, 43)";
@@ -45,9 +46,8 @@ formMessage.addEventListener("submit", async (event) => {
 
   if (message === undefined) {
     event.preventDefault();
-    console.log("pase por aqui");
   }
-  const data = {
+  const dataMessage = {
     userEmail: email,
     userMessage: inputMessage.value,
   };
@@ -59,16 +59,49 @@ formMessage.addEventListener("submit", async (event) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(dataForm),
+      body: JSON.stringify(dataMessage),
     });
     const data = await response.json();
     console.log(data);
   } catch (error) {
     console.log(error);
   }
-  socket.emit("message", data);
+  socket.emit("message", dataMessage);
   inputMessage.value = "";
 });
+
+///click
+sendMessage.addEventListener("click", async (event) => {
+  event.preventDefault();
+  console.log("holis");
+  const message = formMessage.value;
+
+  if (message === undefined) {
+    event.preventDefault();
+  }
+  const dataMessage = {
+    userEmail: email,
+    userMessage: inputMessage.value,
+  };
+
+  const url = "http://localhost:8080/api/messages";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataMessage),
+    });
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+  socket.emit("message", dataMessage);
+  inputMessage.value = "";
+});
+///
 
 inputMessage.addEventListener("keydown", async (event) => {
   const message = formMessage.value;
@@ -104,8 +137,6 @@ inputMessage.addEventListener("keydown", async (event) => {
 const chatBox = document.querySelector(".chatBox");
 
 const createNewMessage = (message) => {
-  console.log(message, "y esto tiene message");
-  console.log(email, message.user);
   const verify = email == message.user;
   const style = verify ? "own" : "other";
 
@@ -115,7 +146,6 @@ const createNewMessage = (message) => {
 };
 
 socket.on("allMessages", async (data) => {
-  console.log(data, "en all message");
   chatBox.innerHTML = "";
   await data.forEach((message) => {
     return createNewMessage(message);
