@@ -26,41 +26,39 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  try {
-    const { title, description, price, thumbnail, stock, category } = req.body;
-    if (!title || !price) {
-      throw new Error("debes ingresar todos los parametros");
-    }
-    const product = {
-      title,
-      description,
-      price,
-      thumbnail,
-      stock,
-      status: true,
-      category,
-    };
-    const response = await products.create(product);
-
-    const allProducts = await products.find(req);
-    console.log(allProducts, "esto es all products");
-    io.emit("newProducts", allProducts);
-    res.status(201).json({ result: "succes", payload: response });
-  } catch (error) {
-    res.json({ message: error.message });
-  }
-});
-// // populate
 // router.post("/", async (req, res) => {
 //   try {
-//     const product = await products.createMany();
-//     await productsModel.insertMany(product);
-//     res.json({ message: "productos cargados" });
+//     const { title, description, price, thumbnail, stock, category } = req.body;
+
+//     const product = {
+//       title,
+//       description,
+//       price,
+//       thumbnail,
+//       stock,
+//       status: true,
+//       category,
+//     };
+//     const response = await products.create(product);
+
+//     const allProducts = await products.find(req);
+//     console.log(allProducts, "esto es all products");
+//     io.emit("newProducts", allProducts);
+//     res.status(201).json({ result: "succes", payload: response });
 //   } catch (error) {
-//     console.log(error);
+//     res.json({ message: error.message });
 //   }
 // });
+// // populate
+router.post("/", async (req, res) => {
+  try {
+    const product = await products.createMany();
+    await productsModel.insertMany(product);
+    res.json({ message: "productos cargados" });
+  } catch (error) {
+    console.log(error);
+  }
+});
 // //
 router.delete("/", async (req, res) => {
   try {

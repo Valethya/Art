@@ -14,7 +14,7 @@ io.on("connection", async (socket) => {
   console.log("nos hemos conectado señores");
   socket.on("message", async (data) => {
     const allMessages = await messages.find();
-    console.log(allMessages, "desde app.js");
+
     io.emit("allMessages", allMessages.message);
   });
 });

@@ -35,7 +35,7 @@ export default class cartsManager {
       throw new Error(error.message);
     }
   }
-  // crea un carrito con un id autoincrementable
+  // crea un carrito
   async create() {
     try {
       await cartsModel.create({ products: [] });
@@ -64,7 +64,6 @@ export default class cartsManager {
   async deleteById(cid) {
     try {
       const cart = await cartsModel.deleteOne({ _id: cid });
-      console.log(cart, "esto es un cart que deberia ser nulo");
       if (cart.deletedCount == 0) {
         throw new Error({
           status: 404,

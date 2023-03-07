@@ -9,11 +9,6 @@ router.get("/:cid", async (req, res) => {
     const { cid } = req.params;
     const response = await carts.findById(cid);
     const products = response.message;
-    // console.log(
-    //   products.map((prod) => {
-    //     return prod;
-    //   })
-    // );
     res.render("cart.handlebars", {
       products: products,
       title: "productos",

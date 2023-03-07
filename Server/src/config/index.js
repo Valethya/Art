@@ -3,5 +3,6 @@ dotenv.config({ path: ".env" });
 
 let port = process.env.PORT || 8080;
 export let pass = process.env.PASS;
+export let passSession = process.env.SECRET_SESSION_STORAGE;
 
 export default port;
