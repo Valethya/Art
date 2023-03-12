@@ -24,12 +24,7 @@ const initializePassport = () => {
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
         try {
-          const user = await usersManager.createUser(
-            req,
-            username,
-            password,
-            done
-          );
+          const user = await usersManager.createUser(req, username, password);
           return done(null, user);
         } catch (error) {
           return done(error);

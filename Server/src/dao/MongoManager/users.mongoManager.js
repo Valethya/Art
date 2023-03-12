@@ -45,9 +45,28 @@ class userManager {
     const { firstName, lastName, email, age } = req.body;
     try {
       const user = await usersModel.findOne({ email: username });
-
       if (user) {
         console.log("Usuario existe");
+        return false;
+      }
+      if (!email) {
+        console.log("ingresa un email");
+        return false;
+      }
+      if (!firstName) {
+        console.log("ingresa tu nombre");
+        return false;
+      }
+      if (!lastName) {
+        console.log("ingresa tu apellido");
+        return false;
+      }
+      if (!age) {
+        console.log("ingresa tu edad");
+        return false;
+      }
+      if (!password) {
+        console.log("ingresa una contraseña");
         return false;
       }
 
@@ -63,7 +82,7 @@ class userManager {
 
       return newUser;
     } catch (error) {
-      return done(error);
+      return error;
     }
   }
 }
