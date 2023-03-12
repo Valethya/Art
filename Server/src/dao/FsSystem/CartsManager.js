@@ -58,7 +58,6 @@ export default class CartsManager {
   updateProduct = async (idProd, infoProduct) => {
     let carts = await this.getProducts();
     let product = carts.findIndex((item) => item.id == idProd);
-    console.log(carts[product].id, "que es esto?");
     let id = carts[product].id;
     carts[product] = { ...infoProduct, id };
 
@@ -67,9 +66,9 @@ export default class CartsManager {
 
   deleteProduct = async (id) => {
     const carts = await this.getProducts();
-    console.log(carts, "mira estos productos");
+
     let products = carts.filter((item) => item.id != id);
-    console.log(products, "esto esta filtrado");
+
     await fs.promises.writeFile(this.path, JSON.stringify(products));
   };
 }

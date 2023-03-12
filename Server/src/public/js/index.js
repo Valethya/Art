@@ -19,7 +19,7 @@ const avatar = document.querySelector(".avatar");
 
 async function fetchData() {
   try {
-    const response = await fetch("http://localhost:8080/auth");
+    const response = await fetch("/auth/infoUser");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -29,9 +29,9 @@ async function fetchData() {
 
 const displayRol = async () => {
   const user = await fetchData();
-  console.log(user);
+
   let letter = user.user ? user.user.firstName : "";
-  console.log(letter);
+
   letter = letter.split("");
   if (user.user) {
     rol.innerHTML = `

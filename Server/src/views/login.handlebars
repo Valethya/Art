@@ -1,19 +1,24 @@
-
 <div class="loginContent">
-   
+
     <div class="login shadow">
-        
-<form action="" class="formLogin">
-     <h2>Login</h2>
-  <label for="">Usuario <input placeholder="Ingresa tu email..." type="email" name="email"></label>
- 
 
-  <label for="">Password  <input placeholder="Ingresa tu contraseña..." type="password" name="password"></label>
- 
+        <form action="" class="formLogin">
+            <h2>Login</h2>
+            <label for="">Usuario <input placeholder="Ingresa tu email..." type="email" name="email"></label>
 
-  <button class="btn" type="submit">Iniciar Sesión</button>
-  <a class="register" href="http://localhost:8080/signup/">registrate</a>
-</form>
+
+            <label for="">Password <input placeholder="Ingresa tu contraseña..." type="password"
+                    name="password"></label>
+
+
+            <button class="btn" type="submit">Iniciar Sesión</button>
+            <a class="register" href="/signup">registrate</a>
+            <a class="register" href="forgotPassword">Olvide la contraseña</a>
+            <button class="btn"><a href="/auth/github">Entrar con Github<img class="icon" src="/img/github.png" /></a>
+            </button>
+            <button class="btn"><a href="/auth/google">Entrar con Google<img class="icon" src="/img/google.png" /></a>
+            </button>
+        </form>
     </div>
 
 
