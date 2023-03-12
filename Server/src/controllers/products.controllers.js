@@ -42,7 +42,6 @@ router.get("/:pid", async (req, res) => {
 //     const response = await products.create(product);
 
 //     const allProducts = await products.find(req);
-//     console.log(allProducts, "esto es all products");
 //     io.emit("newProducts", allProducts);
 //     res.status(201).json({ result: "succes", payload: response });
 //   } catch (error) {

@@ -62,7 +62,6 @@ formMessage.addEventListener("submit", async (event) => {
       body: JSON.stringify(dataMessage),
     });
     const data = await response.json();
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -73,7 +72,7 @@ formMessage.addEventListener("submit", async (event) => {
 ///click
 sendMessage.addEventListener("click", async (event) => {
   event.preventDefault();
-  console.log("holis");
+
   const message = formMessage.value;
 
   if (message === undefined) {
@@ -114,7 +113,7 @@ inputMessage.addEventListener("keydown", async (event) => {
     userMessage: inputMessage.value,
   };
 
-  const url = "http://localhost:8080/api/messages";
+  const url = "/api/messages";
   if (event.key == "Enter") {
     try {
       const response = await fetch(url, {

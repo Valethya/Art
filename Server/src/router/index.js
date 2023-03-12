@@ -9,6 +9,7 @@ import session from "../controllers/session.controller.js";
 import auth from "../controllers/auth.controllers.js";
 import views from "../controllers/views.controllers.js";
 import users from "../controllers/users.controllers.js";
+import admin from "../controllers/admin.controllers.js";
 
 const router = (app) => {
   app.use("/api/products", product);
@@ -22,6 +23,7 @@ const router = (app) => {
   app.use("/auth", auth);
   app.use("/", views);
   app.use("/users", users);
+  app.use("/admin", admin);
 };
 
 export default router;

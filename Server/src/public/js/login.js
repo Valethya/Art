@@ -9,7 +9,7 @@ form.addEventListener("submit", async (e) => {
   data.forEach((value, key) => (dataForm[key] = value));
 
   const url = "/auth";
-  console.log(dataForm);
+
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -19,10 +19,10 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(dataForm),
     });
     const data = await response.json();
-    console.log(data, "esto es data desde login.js");
-
+    // localStorage.setItem("authToken", data.token);
+    console.log(data);
     if (data.message) {
-      window.location.href = "/products";
+      window.location.href = "/";
     }
   } catch (error) {
     console.log(error);

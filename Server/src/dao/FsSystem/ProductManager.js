@@ -50,9 +50,9 @@ export default class ProductManager {
 
   deleteProduct = async (id) => {
     const products = await this.getProducts();
-    console.log(products, "mira estos productos");
+
     let newProducts = products.filter((item) => item.id != id);
-    console.log(newProducts, "esto esta filtrado");
+
     await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
     return await this.getProducts();
   };

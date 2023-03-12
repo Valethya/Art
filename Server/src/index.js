@@ -10,6 +10,10 @@ import { allowInsecurePrototypeAccess } from "@handlebars/allow-prototype-access
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import mongoStore from "connect-mongo";
+import initializePassport from "./config/passport.config.js";
+import passport from "passport";
+import handlerErrors from "./middlesware/handleErrors.js";
+import morgan from "morgan";
 
 export const app = express();
 
@@ -27,7 +31,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -35,7 +39,7 @@ app.use(
     origin: "http://127.0.0.1:5173",
   })
 );
-
+//HANDLEBARS
 app.engine(
   "handlebars",
   expressHandlebars.engine({
@@ -45,8 +49,17 @@ app.engine(
 app.set("views", __dirname + "/views");
 app.set(express.static);
 app.use(express.static(__dirname + "/public"));
+//PASSPORT
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+//COOKIES
+app.use(cookieParser());
+app.use(morgan("dev"));
 
 router(app);
+
+app.use(handlerErrors);
 
 mongoose.set("strictQuery", false);
 

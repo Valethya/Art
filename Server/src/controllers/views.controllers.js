@@ -15,5 +15,8 @@ router.get("/signup", accessControl.publicAccess, (req, res) => {
 router.get("/login", accessControl.publicAccess, (req, res) => {
   res.render("login.handlebars", { style: "login.css" });
 });
+router.get("/forgotPassword", (req, res) => {
+  res.render("forgotPassword.handlebars");
+});
 
 export default router;

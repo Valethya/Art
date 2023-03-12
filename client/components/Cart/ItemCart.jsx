@@ -20,7 +20,6 @@ export function ItemCart() {
     fetchData();
   }, []);
   const datito = data.map((prod) => prod);
-  console.log(data);
   return data.map((prod) => {
     return (
       <div className="itemCart shadow" key={prod.product._id}>

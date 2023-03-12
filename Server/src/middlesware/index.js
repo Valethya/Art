@@ -5,7 +5,7 @@ const privateAccess = (req, res, next) => {
 };
 
 const publicAccess = (req, res, next) => {
-  if (req.session.user) return res.redirect("/products");
+  if (req.session.user) return res.redirect("/");
 
   next();
 };

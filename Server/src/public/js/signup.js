@@ -2,14 +2,14 @@ const form = document.querySelector(".formSignup");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  console.log("holaaaas maldita");
+
   const data = new FormData(form);
   const dataForm = {};
 
   data.forEach((value, key) => (dataForm[key] = value));
 
-  const url = "http://localhost:8080/users/";
-  console.log(dataForm);
+  const url = "/users";
+
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -19,6 +19,9 @@ form.addEventListener("submit", async (e) => {
       body: JSON.stringify(dataForm),
     });
     const data = await response.json();
+    if (data.message) {
+      window.location.href = "/";
+    }
     console.log(data);
   } catch (error) {
     console.log(error);

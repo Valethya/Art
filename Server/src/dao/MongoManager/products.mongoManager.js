@@ -106,11 +106,10 @@ export default class productManager {
   file = `${process.cwd()}/files/product.json`;
 
   async createMany() {
-    console.log(this.file);
     if (fs.existsSync(this.file)) {
       const data = await fs.promises.readFile(this.file);
       const response = JSON.parse(data);
-      console.log(response);
+
       return response;
     }
     return "no se encuentra el archivo";
@@ -121,7 +120,7 @@ export default class productManager {
   async delete() {
     try {
       const product = await productsModel.deleteMany();
-      console.log(product, "ven fijate");
+
       if (product.deletedCount == 0) {
         throw new Error({
           status: 404,
