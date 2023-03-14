@@ -23,4 +23,4 @@ dist-ssr
 *.sln
 *.sw?
 #variables de entorno
-.env
+Server/src/.env
