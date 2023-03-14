@@ -10,6 +10,14 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   googleId: { type: String },
   githubId: { type: String },
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "carts",
+  },
+});
+
+userSchema.pre("findOne", function () {
+  this.populate("carts.cart");
 });
 
 const usersModel = mongoose.model(userCollection, userSchema);
