@@ -54,9 +54,10 @@ const initializePassport = () => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(async (id, done) => {
-    const user = await users.findById(id);
-    done(null, user);
+  passport.deserializeUser(async (user, id, done) => {
+    const User = await users.findById(id);
+
+    done(null, User);
   });
 
   passport.use(

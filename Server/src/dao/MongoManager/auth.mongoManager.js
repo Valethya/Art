@@ -1,5 +1,6 @@
 import usersModel from "../models/users.model.js";
 import cript from "../../helpers/criptPassword.js";
+import { emailAdmin, passAdmin } from "../../config/index.js";
 
 class authManager {
   async authLogin(username, password) {
@@ -16,6 +17,21 @@ class authManager {
       return user;
     } catch (error) {
       return error.error;
+    }
+  }
+  validAdmin(username, password) {
+    if (username == emailAdmin) {
+      if (password == passAdmin) {
+        const user = {
+          firstName: "admin",
+          email: username,
+          rol: "admin",
+          id: "123456789101",
+        };
+        return user;
+      } else {
+        return false;
+      }
     }
   }
 

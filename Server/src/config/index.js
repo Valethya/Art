@@ -9,5 +9,7 @@ export let secretGithub = process.env.CLIENT_SECRET_GITHUB;
 export let idGoole = process.env.CLIENT_ID_GOOGLE;
 export let secretGoogle = process.env.CLIENT_SECRET_GOOGLE;
 export let secretKey = process.env.SECRET_KEY;
+export let emailAdmin = process.env.EMAIL_ADMIN;
+export let passAdmin = process.env.PASS_ADMIN;
 
 export default port;

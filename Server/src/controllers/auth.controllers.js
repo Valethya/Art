@@ -54,11 +54,14 @@ router.post(
       if (!req.user)
         return res.status(400).json({ error: "Credenciales invalidas" });
 
+      const role = email === "adminCoder@coder.com" ? "admin" : "user";
+
       req.session.user = {
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         age: req.user.age,
         email: req.user.email,
+        role: role,
       };
 
       // const email = req.body.email;
