@@ -55,7 +55,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //COOKIES
 app.use(cookieParser());
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 
 router(app);
 

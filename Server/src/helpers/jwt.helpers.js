@@ -19,6 +19,7 @@ export const authToken = (req, res, next) => {
     next();
   });
 };
+export const verifyToken = (token) => jwt.verify(token, secretKey);
 
 export const authTokenCookie = (req, res, next) => {
   const token = req.cookies.authToken;

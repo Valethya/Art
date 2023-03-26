@@ -84,14 +84,15 @@ export default class productManager {
   //busca un producto por id
   async findById(pid) {
     try {
-      const response = await productsModel.findOne({ id: pid });
+      const response = await productsModel.findOne({ _id: pid });
       if (response == null) {
         throw new Error({
           status: 404,
           message: `El carrito con id ${pid} no existe`,
         });
       }
-      return { status: 200, message: response };
+      console.log(response, "response manager");
+      return response;
     } catch (error) {
       return error.message;
     }
@@ -99,7 +100,7 @@ export default class productManager {
   //crea un producto
   async create(prod) {
     await productsModel.create(prod);
-    return { status: 200, message: "producto fue creado" };
+    return "producto fue creado";
   }
 
   //populate
@@ -127,7 +128,7 @@ export default class productManager {
           message: "no hay productos para borrar",
         });
       }
-      return { status: 204, message: "productos eliminados" };
+      return "productos eliminados";
     } catch (error) {
       return error.message;
     }
@@ -142,7 +143,7 @@ export default class productManager {
           message: `El producto con id ${pid} no existe`,
         });
       }
-      return { status: 204, message: `el producto ${pid} fue aliminado` };
+      return `el producto ${pid} fue aliminado`;
     } catch (error) {
       return error.message;
     }

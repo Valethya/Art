@@ -8,10 +8,8 @@ export default class cartsManager {
   async find() {
     try {
       const products = await cartsModel.find();
-      return {
-        status: 200,
-        message: products,
-      };
+      console.log(products, " productos de carrito");
+      return products;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -22,15 +20,9 @@ export default class cartsManager {
       const cart = await cartsModel.findOne({ _id: cid });
 
       if (cart == null) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
+        throw new Error(`El carrito con id ${cid} no existe`);
       }
-      return {
-        status: 200,
-        message: cart.products,
-      };
+      return cart.products;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -39,10 +31,7 @@ export default class cartsManager {
   async create() {
     try {
       await cartsModel.create({ products: [] });
-      return {
-        status: 201,
-        message: "carrito fue creado",
-      };
+      return "carrito fue creado";
     } catch (error) {
       throw new Error(error.message);
     }
@@ -52,10 +41,7 @@ export default class cartsManager {
   async delete() {
     try {
       await cartsModel.deleteMany();
-      return {
-        status: 204,
-        message: "carritos eliminados",
-      };
+      return "carritos eliminados";
     } catch (error) {
       throw new Error(error.message);
     }
@@ -65,15 +51,9 @@ export default class cartsManager {
     try {
       const cart = await cartsModel.deleteOne({ _id: cid });
       if (cart.deletedCount == 0) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
+        throw new Error(`El carrito con id ${cid} no existe`);
       }
-      return {
-        status: 204,
-        message: `carrito ${cid} eliminado`,
-      };
+      return `carrito ${cid} eliminado`;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -86,22 +66,15 @@ export default class cartsManager {
     const cart = await this.findById(cid);
     const prod = await product.findById(pid);
     if (!cart && !prod) {
-      throw new Error({
-        status: 404,
-        message: `El carrito con id ${cid} y el producto con id ${pid} no existen`,
-      });
+      throw new Error(
+        `El carrito con id ${cid} y el producto con id ${pid} no existen`
+      );
     }
     if (!cart) {
-      throw new Error({
-        status: 404,
-        message: `El carrito con id ${cid} no existe`,
-      });
+      throw new Error(`El carrito con id ${cid} no existe`);
     }
     if (!prod) {
-      throw new Error({
-        status: 404,
-        message: `El producto con id ${pid} no existe`,
-      });
+      throw new Error(`El producto con id ${pid} no existe`);
     }
     return true;
   }
@@ -124,10 +97,7 @@ export default class cartsManager {
           { $inc: { "products.$.qty": 1 } }
         );
       }
-      return {
-        status: 204,
-        message: `el producto ${pid} fue agregado a tu carrito`,
-      };
+      return `el producto ${pid} fue agregado a tu carrito`;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -140,10 +110,7 @@ export default class cartsManager {
         { _id: cid, "products.product": pid },
         { $set: { "products.$.qty": qty } }
       );
-      return {
-        status: 204,
-        message: `la cantidad de productos se ha actualizado en: ${qty}`,
-      };
+      return `la cantidad de productos se ha actualizado en: ${qty}`;
     } catch (error) {
       return error.message;
     }
@@ -164,10 +131,7 @@ export default class cartsManager {
         { _id: cid, "products.qty": { $eq: 0 } },
         { $pull: { products: { product: pid } } }
       );
-      return {
-        status: 204,
-        message: `el producto ${pid} fue eliminado de tu carrito`,
-      };
+      return `el producto ${pid} fue eliminado de tu carrito`;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -177,20 +141,14 @@ export default class cartsManager {
     try {
       const cart = await cartsModel.findOne({ _id: cid });
       if (cart == null) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
+        throw new Error(`El carrito con id ${cid} no existe`);
       } else {
         const response = await cartsModel.updateOne(
           { _id: cid },
           { $set: { products: [] } }
         );
       }
-      return {
-        status: 204,
-        message: `todos los productos fueron eliminados del carrito`,
-      };
+      return `todos los productos fueron eliminados del carrito`;
     } catch (error) {}
   }
 }

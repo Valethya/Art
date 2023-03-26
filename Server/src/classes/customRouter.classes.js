@@ -1,9 +1,9 @@
 import Router from "express";
-
+import { verifyToken } from "../helpers/jwt.helpers.js";
 export default class customRouter {
   constructor() {
     this.router = Router();
-    tthis.int();
+    this.init();
   }
   getRouter() {
     return this.router;
@@ -13,35 +13,36 @@ export default class customRouter {
   get(path, policies, ...callbacks) {
     this.router.get(
       path,
-      this.handlePolice,
+      this.handlePolice(policies),
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
     );
   }
   post(path, policies, ...callbacks) {
-    this.router.get(
+    console.log("pasa por aqui o no?");
+    this.router.post(
       path,
-      this.handlePolice,
+      this.handlePolice(policies),
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
     );
   }
   put(path, ...callbacks) {
-    this.router.get(
+    this.router.put(
       path,
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
     );
   }
   patch(path, ...callbacks) {
-    this.router.get(
+    this.router.patch(
       path,
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
     );
   }
   delete(path, ...callbacks) {
-    this.router.get(
+    this.router.delete(
       path,
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
@@ -65,13 +66,16 @@ export default class customRouter {
       res
         .status(500)
         .json({ status: "error", message: "internal server error" });
-    res.sendUserError = ({ error, code }) =>
+    res.sendError = ({ error, code }) =>
       res.status(400).json({ status: "error", error, statusCode: code });
     next();
   }
   handlePolice(policies) {
     return (req, res, next) => {
-      if (public.includes("PUBLIC")) return next();
+      console.log(policies.includes("PUBLIC"));
+      if (policies.includes("PUBLIC")) {
+        return next();
+      }
       const authHeader = req.authHeader.authorization;
       if (!authHeader)
         return res.status(401).json({ error: "not authenticated" });
@@ -81,7 +85,8 @@ export default class customRouter {
       if (!policies.includes(user.normalize.toUppercase()))
         return res.status(403).json({ error: "not atuhorized" });
 
-      req.user = usernext();
+      req.user = user;
+      next();
     };
   }
 }

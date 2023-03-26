@@ -1,35 +1,38 @@
 import messageManager from "../dao/MongoManager/message.mongoManager.js";
-import Router from "express";
+import myRouters from "../classes/customRouter.classes.js";
 
-const router = Router();
 const messages = new messageManager();
 
-router.get("/", async (req, res) => {
-  const response = await messages.find();
-  res.json({ response });
-});
+class messageRouter extends myRouters {
+  init() {
+    this.get("/", async (req, res) => {
+      const response = await messages.find();
+      res.json({ response });
+    });
 
-router.post("/", async (req, res) => {
-  try {
-    const { userEmail, userMessage } = req.body;
-    const dataMessage = {
-      user: userEmail,
-      message: userMessage,
-    };
+    this.post("/", async (req, res) => {
+      try {
+        const { userEmail, userMessage } = req.body;
+        const dataMessage = {
+          user: userEmail,
+          message: userMessage,
+        };
 
-    const response = await messages.create(dataMessage);
+        const response = await messages.create(dataMessage);
 
-    res.json({ response: response });
-  } catch (error) {}
-});
+        res.json({ response: response });
+      } catch (error) {}
+    });
 
-router.delete("/", async (req, res) => {
-  try {
-    const response = await messages.delete();
-    res.json({ result: "succes", payload: response });
-  } catch (error) {
-    res.json({ error: error.message });
+    this.delete("/", async (req, res) => {
+      try {
+        const response = await messages.delete();
+        res.json({ result: "succes", payload: response });
+      } catch (error) {
+        res.json({ error: error.message });
+      }
+    });
   }
-});
+}
 
-export default router;
+export default messageRouter;

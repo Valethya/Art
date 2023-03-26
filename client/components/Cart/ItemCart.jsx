@@ -8,10 +8,12 @@ export function ItemCart() {
     async function fetchData() {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/carts/63f293aad6a291d75d03c98f"
+          "http://localhost:8080/api/carts/6404e70c154f3dc9e3f4fbfd"
         );
+
         const data = await response.json();
-        const products = data.payload.message;
+        console.log(data.message);
+        const products = data.message;
         setData(products);
       } catch (error) {
         console.error(error);

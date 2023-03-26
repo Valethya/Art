@@ -7,33 +7,32 @@ import Header from "../components/NavBar/Header";
 import CardContainer from "../components/Container/CardContainer";
 import Container from "../components/Container/Container";
 import Cart from "../components/Cart/Cart";
+import { MainContextProvider } from "../Context/MainContext";
+import LoginPage from "../Page/LoginPage";
+import FramesPage from "../Page/FramesPage";
+import CartPage from "../Page/CartPage";
 function App() {
   return (
-    <Router>
-      <NavBar />
-
-      <StrictMode>
-        <Routes>
-          <Route path="/" element={<Header />}></Route>
-          <Route
-            path="/cuadros"
-            element={
-              <Container>
-                <CardContainer />
-              </Container>
-            }
-          ></Route>
-          <Route
-            path="/cart"
-            element={
-              <Container>
-                <Cart />
-              </Container>
-            }
-          ></Route>
-        </Routes>
-      </StrictMode>
-    </Router>
+    <MainContextProvider>
+      <Router>
+        <StrictMode>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <NavBar />
+                  <Header />
+                </>
+              }
+            ></Route>
+            <Route path="/login" element={<LoginPage />}></Route>
+            <Route path="/cuadros" element={<FramesPage />}></Route>
+            <Route path="/cart" element={<CartPage />}></Route>
+          </Routes>
+        </StrictMode>
+      </Router>
+    </MainContextProvider>
   );
 }
 

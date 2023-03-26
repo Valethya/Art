@@ -1,41 +1,29 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import { mainContext } from "../../Context/MainContext";
 import Button from "../Button/Button";
 
-export default function Card() {
-  const [data, setData] = useState([]);
+export default function Card({ prod }) {
+  const { setIdProd } = useContext(mainContext);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:8080/api/products");
-        const data = await response.json();
-        setData(data.payload);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
+  function addProduct() {
+    setIdProd(prod.id);
+  }
+  return (
+    <div className="card ">
+      <div className="contentCard">
+        <div className="contentImg">
+          <img src={prod.thumbnail}></img>
+        </div>
 
-  return data.map((prod) => {
-    return (
-      <div className="card ">
-        <div className="contentCard">
-          <div className="contentImg">
-            <img src={prod.thumbnail}></img>
+        <div>
+          <div className="cardTitle">
+            <h4>{prod.title}</h4>
           </div>
+          <span>$ {prod.price}</span>
 
-          <div>
-            <div className="cardTitle">
-              <h4>{prod.title}</h4>
-            </div>
-            <span>$ {prod.price}</span>
-
-            <Button>Agregar</Button>
-          </div>
+          <Button handleClick={addProduct}>Agregar</Button>
         </div>
       </div>
-    );
-  });
+    </div>
+  );
 }

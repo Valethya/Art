@@ -1,6 +1,5 @@
 import React from "react";
 import Arrows from "../Arrows/Arrows";
-import magritte from "../../src/assets/img/beautifulWorld.jpeg";
 
 export default function Header() {
   return (

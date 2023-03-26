@@ -1,12 +1,10 @@
-import { Router } from "express";
+import myRouter from "../classes/customRouter.classes.js";
 // import userManager from "../dao/MongoManager/users.mongoManager.js";
 import passport from "passport";
 
-const router = Router();
-
 // const users = new userManager();
 
-// router.post("/", async (req, res) => {
+// this.post("/", async (req, res) => {
 //   const { firstName, lastName, age, email, password } = req.body;
 //   const newUser = {
 //     firstName,
@@ -24,25 +22,30 @@ const router = Router();
 //     res.json({ message: error.message });
 //   }
 // });
+class userRouter extends myRouter {
+  init() {
+    this.post(
+      "/",
+      passport.authenticate("register", ["PUBLIC"], {
+        failureRedirect: "/failRegister",
+      }),
+      async (req, res) => {
+        try {
+          res.sendSuccess({ code: 200, payload: "Usuario registrado" });
+        } catch (error) {
+          console.log(error);
+          if (error.code === 11000)
+            return res.sendError({ error: "El usuario ya existe" });
+          res.sendError({ error: "Error interno del servidor" });
+        }
+      }
+    );
 
-router.post(
-  "/",
-  passport.authenticate("register", { failureRedirect: "/failRegister" }),
-  async (req, res) => {
-    try {
-      res.json({ message: "Usuario registrado" });
-    } catch (error) {
-      console.log(error);
-      if (error.code === 11000)
-        return res.status(400).json({ error: "El usuario ya existe" });
-      res.status(500).json({ error: "Error interno del servidor" });
-    }
+    this.get("/failRegister", ["PUBLIC"], async (req, res) => {
+      console.log("Falló el registro");
+      res.sendError({ error: "Falló" });
+    });
   }
-);
+}
 
-router.get("/failRegister", async (req, res) => {
-  console.log("Falló el registro");
-  res.json({ error: "Falló" });
-});
-
-export default router;
+export default userRouter;

@@ -8,17 +8,19 @@
 @import "../../../components/Container/container.scss";
 @import "../../../components/Button/button.scss";
 @import "../../../components/Cart/cart.scss";
+@import "../../../components/Pagination/Pagination.scss";
+@import "../../../components/Login/Login.scss";
 @keyframes scalar {
-    0% {
-        -webkit-transform: scale(1);
-        -ms-transform: scale(1);
-        transform: scale(1);
-    }
-    100% {
-        -webkit-transform: scale(2);
-        -ms-transform: scale(2);
-        transform: scale(2);
-    }
+  0% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(2);
+    -ms-transform: scale(2);
+    transform: scale(2);
+  }
 }
 // body{
 //     height: 300vh;
@@ -28,11 +30,35 @@
 //     height: 300vh;
 // }
 
-//colores 
-.shadow{
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+//colores
+.shadow {
+  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+    0 1px 5px 0 rgb(0 0 0 / 20%);
 }
-a{
-    text-decoration: none;
-    color: #000;
+a {
+  text-decoration: none;
+  color: #000;
+}
+input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.425);
+  margin-bottom: 1em;
+}
+input:focus-visible {
+  outline: none;
+}
+.icon {
+  height: 1.5em;
+  margin-left: 1em;
+}
+a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+span {
+  display: flex;
 }

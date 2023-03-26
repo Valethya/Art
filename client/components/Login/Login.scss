@@ -1,0 +1,34 @@
+.loginContent {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+.login {
+  width: 40%;
+  border: 1px solid rgba(128, 128, 128, 0.226);
+  padding: 2em;
+}
+.formLogin {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 1px solid rgba(128, 128, 128, 0.226);
+  padding: 2em;
+}
+.formLogin h2 {
+  margin: 0;
+}
+.register {
+  color: #81d4fa;
+  align-self: center;
+  transition: 1s;
+}
+.register:hover {
+  letter-spacing: 5px;
+  border-bottom: 1px solid #81d4fa;
+}

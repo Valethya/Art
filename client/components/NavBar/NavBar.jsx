@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const pages = ["Cuadros", "Blog"];
+const pages = ["cuadros", "Blog"];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];{/*los setting del menu desplegable del usuario*/}
 
 function NavBar() {
@@ -77,19 +77,23 @@ function NavBar() {
         {pages.map((page) => {
           return (
             <li className="page" key={page}>
-              <Link to={page} className="linkNav">
+              <Link to={`../${page}`} className="linkNav">
                 {page}
               </Link>
             </li>
           );
         })}
-        <li className="liAvatar" key="avatar">
-          <Avatar />
-        </li>
         <li className="iconCart" key="cart">
           <Link to={"/cart"}>
             <ShoppingCartIcon />
           </Link>
+        </li>
+        <li className="liAvatar" key="avatar">
+          <Avatar />
+          <div className="user">
+            <span className="rolRendered"></span>
+            <span className="logout"></span>
+          </div>
         </li>
       </ul>
     </nav>
