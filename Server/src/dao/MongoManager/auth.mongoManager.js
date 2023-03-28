@@ -1,12 +1,20 @@
 import usersModel from "../models/users.model.js";
 import cript from "../../helpers/criptPassword.js";
 import { emailAdmin, passAdmin } from "../../config/index.js";
-
+import cartsManager from "./carts.mongoManager.js";
+const cartManager = new cartsManager();
 class authManager {
   async authLogin(username, password) {
     try {
+      try {
+        const admin = this.validAdmin(username, password);
+        if (admin) {
+          return admin;
+        }
+      } catch (error) {
+        // Ignoramos las excepciones arrojadas por validAdmin()
+      }
       const user = await usersModel.findOne({ email: username });
-
       if (!user) {
         console.log("Usuario no existe");
         return false;
@@ -20,7 +28,9 @@ class authManager {
     }
   }
   validAdmin(username, password) {
+    console.log(username == emailAdmin);
     if (username == emailAdmin) {
+      console.log(password == passAdmin);
       if (password == passAdmin) {
         const user = {
           firstName: "admin",
@@ -40,6 +50,7 @@ class authManager {
       const user = await usersModel.findOne({ githubId: profile._json.id });
 
       if (!user) {
+        const cart = await cartManager.create();
         const newUserInfo = {
           githubId: profile._json.id,
           firstName: profile._json.name
@@ -49,6 +60,7 @@ class authManager {
           age: 18,
           email: profile._json.email ? profile._json.email : "",
           password: "",
+          cart,
         };
 
         const newUser = await usersModel.create(newUserInfo);
@@ -66,6 +78,7 @@ class authManager {
       const user = await usersModel.findOne({ googleId: profile._json.sub });
 
       if (!user) {
+        const cart = await cartManager.create();
         const newUserInfo = {
           googleId: profile._json.sub,
           firstName: profile._json.given_name ? profile._json.given_name : "",
@@ -73,6 +86,7 @@ class authManager {
           age: 18,
           email: profile._json.email ? profile._json.email : "",
           password: "",
+          cart,
         };
 
         const newUser = await usersModel.create(newUserInfo);

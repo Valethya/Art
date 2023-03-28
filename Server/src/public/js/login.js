@@ -7,7 +7,7 @@ form.addEventListener("submit", async (e) => {
   const dataForm = {};
 
   data.forEach((value, key) => (dataForm[key] = value));
-
+  console.log(dataForm);
   const url = "/auth";
 
   try {

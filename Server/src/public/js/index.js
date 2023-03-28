@@ -19,9 +19,9 @@ const avatar = document.querySelector(".avatar");
 
 async function fetchData() {
   try {
-    const response = await fetch("/auth/infoUser");
+    const response = await fetch("/session/current");
     const data = await response.json();
-    return data;
+    return data.payload;
   } catch (error) {
     console.error(error);
   }
@@ -30,13 +30,13 @@ async function fetchData() {
 const displayRol = async () => {
   const user = await fetchData();
 
-  let letter = user.user ? user.user.firstName : "";
+  let letter = user ? user.firstName : "";
 
   letter = letter.split("");
-  if (user.user) {
+  if (user) {
     rol.innerHTML = `
-  ${user?.user.firstName}<br>
-  ${user?.user.email}
+  ${user?.firstName}<br>
+  ${user?.email}
   `;
     logout.innerHTML = `<a href="/auth/logout"><i class="exit material-icons">exit_to_app
     </i></a>`;

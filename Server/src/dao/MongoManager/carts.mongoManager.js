@@ -38,11 +38,8 @@ export default class cartsManager {
   // crea un carrito
   async create() {
     try {
-      await cartsModel.create({ products: [] });
-      return {
-        status: 201,
-        message: "carrito fue creado",
-      };
+      const cart = await cartsModel.create({ products: [] });
+      return cart;
     } catch (error) {
       throw new Error(error.message);
     }

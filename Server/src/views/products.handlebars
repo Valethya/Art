@@ -8,7 +8,7 @@
         <li class="page"><a class="linkNav" href="#">Cuadros</a></li>
         <li class="page"><a class="linkNav" href="/Blog">Blog</a></li>
 
-        <li class="iconCart"><a href="/cart/6404e70c154f3dc9e3f4fbfd"><i class="material-icons">shopping_cart</i></a>
+        <li class="iconCart"><a href="/cart/{{user.cart._id}}"><i class="material-icons">shopping_cart</i></a>
         </li>
         <li class="liAvatar">
             <div class="avatar"></div>
@@ -32,8 +32,8 @@
                     <div class="cardDetail">
                         <div class="cardTitle">
                             <h4>{{this.title}}</h4>
-                        </div><span>$ {{this.price}}</span><button data-id="{{this.id}}"
-                            class="btn add">agregar</button>
+                        </div><span>$ {{this.price}}</span><button data-cart="{{../user.cart._id}}"
+                            data-id="{{this.id}}" class="btn add">agregar</button>
                     </div>
                 </div>
             </div>

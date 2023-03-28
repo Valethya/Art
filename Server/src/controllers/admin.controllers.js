@@ -7,9 +7,9 @@ const router = Router();
 router.get(
   "/private",
   passportCall("jwt", { session: false }),
-  authorization("admin"),
+  authorization({ admin: "admin" }),
   (req, res) => {
-    res.json({ message: "Esto es privado!!!!" });
+    res.json({ message: "bienvenido!!!!" });
   }
 );
 

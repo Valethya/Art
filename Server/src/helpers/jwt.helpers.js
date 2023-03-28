@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-import secretKey from "../config/index.js";
+import { secretKey } from "../config/index.js";
 
 export const generateToken = (user) => {
-  const token = jwt.sign({ user, role: "admin" }, secretKey, {
-    expiresIn: "60s",
+  const token = jwt.sign({ ...user }, secretKey, {
+    expiresIn: "120s",
   });
   return token;
 };
@@ -14,7 +14,7 @@ export const authToken = (req, res, next) => {
   const token = authHeaders.split(" ")[1];
   jwt.verify(token, secretKey, (error, Credential) => {
     if (error) return res.status(403).json({ error: "not authorized" });
-    req.user = Credential.user;
+    req.user = Credential;
 
     next();
   });
@@ -26,8 +26,8 @@ export const authTokenCookie = (req, res, next) => {
 
   jwt.verify(token, secretKey, (error, Credential) => {
     if (error) return res.status(403).json({ error: "not authorized" });
-    req.user = Credential.user;
 
+    req.user = Credential;
     next();
   });
 };

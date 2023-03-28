@@ -1,18 +1,28 @@
 import { Router } from "express";
-import accessControl from "../middlesware/index.js";
+import { authTokenCookie } from "../helpers/jwt.helpers.js";
+import passportCall from "../helpers/passportCall.helpers.js";
+import authorization, {
+  publicAccess,
+} from "../middlesware/authorization.middleware.js";
 
 const router = Router();
 
-router.get("/", accessControl.privateAccess, (req, res) => {
-  const { user } = req.session;
-  res.render("profile.handlebars", { user });
-});
+router.get(
+  "/",
+  passportCall("jwt", { session: false }),
+  // authorization({ user: "user", admin: "admin" }),
+  // authTokenCookie,
+  (req, res) => {
+    const user = req.user;
+    res.render("profile.handlebars", { user });
+  }
+);
 
-router.get("/signup", accessControl.publicAccess, (req, res) => {
+router.get("/signup", publicAccess, (req, res) => {
   res.render("signup.handlebars", { style: "signup.css" });
 });
 
-router.get("/login", accessControl.publicAccess, (req, res) => {
+router.get("/login", publicAccess, (req, res) => {
   res.render("login.handlebars", { style: "login.css" });
 });
 router.get("/forgotPassword", (req, res) => {

@@ -1,5 +1,7 @@
 import usersModel from "../models/users.model.js";
 import cript from "../../helpers/criptPassword.js";
+import cartsManager from "./carts.mongoManager.js";
+const cartManager = new cartsManager();
 class userManager {
   // async create(user) {
   //   try {
@@ -42,7 +44,7 @@ class userManager {
   // }
 
   async createUser(req, username, password) {
-    const { firstName, lastName, email, age } = req.body;
+    const { firstName, lastName, email, age, cart } = req.body;
     try {
       const user = await usersModel.findOne({ email: username });
       if (user) {
@@ -69,13 +71,14 @@ class userManager {
         console.log("ingresa una contraseña");
         return false;
       }
-
+      const cart = await cartManager.create();
       const newUserInfo = {
         firstName,
         lastName,
         email,
         age,
         password: cript.createHash(password),
+        cart,
       };
 
       const newUser = await usersModel.create(newUserInfo);

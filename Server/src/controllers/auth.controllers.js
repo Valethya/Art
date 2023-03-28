@@ -54,23 +54,27 @@ router.post(
       if (!req.user)
         return res.status(400).json({ error: "Credenciales invalidas" });
 
-      const role = email === "adminCoder@coder.com" ? "admin" : "user";
-
-      req.session.user = {
+      // req.session.user = {
+      //   firstName: req.user.firstName,
+      //   lastName: req.user.lastName,
+      //   age: req.user.age,
+      //   email: req.user.email,
+      //   rol: req.user.rol,
+      // };
+      // console.log(req.session.user, " esto es session");
+      const user = {
         firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
         email: req.user.email,
-        role: role,
+        lastName: req.user.lastName || "",
+        rol: req.user.rol,
       };
-
-      // const email = req.body.email;
-      // const token = generateToken(email);
-
-      // res.json({ message: "usuario incia sesion", token });
-      res.json({ message: req.user });
+      const token = generateToken(user);
+      res
+        .cookie("authToken", token, { maxAge: 80000, httpOnly: true })
+        .json({ message: "Sesión iniciada" });
+      // res.json({ message: req.user });
     } catch (error) {
-      res.status(500).json({ error: "Internal Server Error" });
+      res.status(500).json({ error, hola: "no se que onda" });
     }
   }
 );
