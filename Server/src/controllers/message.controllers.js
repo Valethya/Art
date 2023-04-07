@@ -1,11 +1,10 @@
-import messageManager from "../dao/MongoManager/message.mongoManager.js";
+import { create, deleteMessage, find } from "../service/message.service.js";
 import Router from "express";
 
 const router = Router();
-const messages = new messageManager();
 
 router.get("/", async (req, res) => {
-  const response = await messages.find();
+  const response = await find();
   res.json({ response });
 });
 
@@ -17,7 +16,7 @@ router.post("/", async (req, res) => {
       message: userMessage,
     };
 
-    const response = await messages.create(dataMessage);
+    const response = await create(dataMessage);
 
     res.json({ response: response });
   } catch (error) {}
@@ -25,7 +24,7 @@ router.post("/", async (req, res) => {
 
 router.delete("/", async (req, res) => {
   try {
-    const response = await messages.delete();
+    const response = await deleteMessage();
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });

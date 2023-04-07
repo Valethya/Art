@@ -1,15 +1,20 @@
 import { Router } from "express";
-import productManager from "../dao/MongoManager/products.mongoManager.js";
 import productsModel from "../dao/models/products.model.js";
+import {
+  find,
+  findById,
+  create,
+  createMany,
+  deleteById,
+  deleteProduct,
+} from "../service/products.service.js";
 import io from "../app.js";
-
-const products = new productManager();
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const response = await products.find(req);
+    const response = await find(req);
     res.json(response);
   } catch (error) {
     res.json({ error: error.message });
@@ -19,7 +24,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    const response = await products.findById(pid);
+    const response = await findById(pid);
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error, message });
@@ -39,9 +44,9 @@ router.get("/:pid", async (req, res) => {
 //       status: true,
 //       category,
 //     };
-//     const response = await products.create(product);
+//     const response = await create(product);
 
-//     const allProducts = await products.find(req);
+//     const allProducts = await find(req);
 //     io.emit("newProducts", allProducts);
 //     res.status(201).json({ result: "succes", payload: response });
 //   } catch (error) {
@@ -51,7 +56,7 @@ router.get("/:pid", async (req, res) => {
 // // populate
 router.post("/", async (req, res) => {
   try {
-    const product = await products.createMany();
+    const product = await createMany();
     await productsModel.insertMany(product);
     res.json({ message: "productos cargados" });
   } catch (error) {
@@ -61,7 +66,7 @@ router.post("/", async (req, res) => {
 // //
 router.delete("/", async (req, res) => {
   try {
-    const response = await products.delete();
+    const response = await deleteProduct();
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });
@@ -71,9 +76,9 @@ router.delete("/", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
-    const response = await products.deleteById(pid);
+    const response = await deleteById(pid);
 
-    const allProducts = await products.find(req);
+    const allProducts = await find(req);
 
     io.emit("newProducts", allProducts);
 

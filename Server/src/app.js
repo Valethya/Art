@@ -5,7 +5,7 @@ import messageManager from "./dao/MongoManager/message.mongoManager.js";
 
 const messages = new messageManager();
 const httpServer = app.listen(port, () => {
-  console.log(`server runnin at port ${port}`);
+  console.log(`server running at port ${port}`);
 });
 
 const io = new Server(httpServer);

@@ -1,10 +1,10 @@
 import messageModels from "../models/message.models.js";
 
 export default class messageManager {
-  async find() {
+  async persistFind() {
     try {
       const message = await messageModels.find();
-      return { status: 200, message: message };
+      return message;
     } catch (error) {
       return {
         status: 404,
@@ -13,26 +13,18 @@ export default class messageManager {
     }
   }
 
-  async create(dataMessage) {
+  async persistCreate(dataMessage) {
     try {
       await messageModels.create(dataMessage);
-      return { status: 201, message: "mensaje creado" };
     } catch (error) {
       return error;
     }
   }
 
-  async delete() {
+  async persistDelete() {
     try {
       const message = await messageModels.deleteMany();
-
-      if (message.deletedCount == 0) {
-        throw new Error({
-          status: 404,
-          message: "no hay productos para borrar",
-        });
-      }
-      return { status: 204, message: "productos eliminados" };
+      return message;
     } catch (error) {
       return error.message;
     }

@@ -1,13 +1,12 @@
 import { Router } from "express";
-import cartsManager from "../dao/MongoManager/carts.mongoManager.js";
+import { findById } from "../service/carts.service.js";
 
 const router = Router();
-const carts = new cartsManager();
 
 router.get("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const response = await carts.findById(cid);
+    const response = await findById(cid);
     const products = response.message;
     res.render("cart.handlebars", {
       products: products,

@@ -3,8 +3,7 @@ import local from "passport-local";
 import GithubStrategy from "passport-github2";
 import GoogleStrategy from "passport-google-oauth20";
 import users from "../dao/models/users.model.js";
-import userManager from "../dao/MongoManager/users.mongoManager.js";
-import authManager from "../dao/MongoManager/auth.mongoManager.js";
+import { createUser } from "../service/users.service.js";
 import {
   idGithub,
   secretKey,
@@ -14,9 +13,8 @@ import {
 } from "./index.js";
 import jwt, { ExtractJwt } from "passport-jwt";
 import { cookieExtractor } from "../helpers/cookieExtractor.helper.js";
+import { authLogin, authGithub } from "../service/auth.service.js";
 
-const usersManager = new userManager();
-const authsManager = new authManager();
 const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;
 
@@ -27,7 +25,7 @@ const initializePassport = () => {
       { passReqToCallback: true, usernameField: "email" },
       async (req, username, password, done) => {
         try {
-          const user = await usersManager.createUser(req, username, password);
+          const user = await createUser(req, username, password);
           return done(null, user);
         } catch (error) {
           return done(error);
@@ -86,8 +84,8 @@ const initializePassport = () => {
       { usernameField: "email" },
       async (username, password, done) => {
         try {
-          const user = await authsManager.authLogin(username, password);
-
+          const user = await authLogin(username, password);
+          console.log(user);
           return done(null, user);
         } catch (error) {
           done(error);
@@ -106,7 +104,7 @@ const initializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const user = await authsManager.authGithub(profile);
+          const user = await authGithub(profile);
           return done(null, user);
         } catch (error) {
           done(error);
@@ -125,7 +123,7 @@ const initializePassport = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const user = await authsManager.authGoogle(profile);
+          const user = await authGoogle(profile);
           return done(null, user);
         } catch (error) {
           done(error);

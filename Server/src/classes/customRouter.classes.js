@@ -13,7 +13,7 @@ export default class customRouter {
   get(path, policies, ...callbacks) {
     this.router.get(
       path,
-      this.handlePolice,
+      this.handlePolice(policies),
       this.generateCustomResponse,
       this.applyCallbacks(callbacks)
     );

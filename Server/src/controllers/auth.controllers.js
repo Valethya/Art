@@ -6,7 +6,6 @@ import User from "../dao/models/users.model.js";
 import { generateToken, authToken } from "../helpers/jwt.helpers.js";
 
 const router = Router();
-const users = new userManager();
 
 // router.post("/", async (req, res) => {
 //   try {

@@ -1,42 +1,79 @@
 import cartsModel from "../models/carts.models.js";
-import productManager from "./products.mongoManager.js";
-
-const product = new productManager();
+import mongoose from "mongoose";
 
 export default class cartsManager {
   //muestra todos los carritos
-  async find() {
+  async persistFind() {
     try {
       const products = await cartsModel.find();
-      return {
-        status: 200,
-        message: products,
-      };
+      return products;
     } catch (error) {
       throw new Error(error.message);
     }
   }
+  // summary cart
+  async summaryCart(cid) {
+    try {
+      const summary = await cartsModel.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(cid) } },
+        { $unwind: "$products" },
+        {
+          $lookup: {
+            from: "products",
+            localField: "products.product",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        { $unwind: "$product" },
+        {
+          $group: {
+            _id: "$_id",
+            summaryByProducts: {
+              $push: {
+                productId: "$product._id",
+                totalValue: {
+                  $multiply: ["$products.qty", "$product.price"],
+                },
+                totalQuantity: "$products.qty",
+              },
+            },
+            totalValue: {
+              $sum: {
+                $let: {
+                  vars: {
+                    totalPrice: {
+                      $multiply: ["$products.qty", "$product.price"],
+                    },
+                  },
+                  in: "$$totalPrice",
+                },
+              },
+            },
+            totalQuantity: {
+              $sum: "$products.qty",
+            },
+          },
+        },
+      ]);
+      console.log(summary);
+      return summary;
+    } catch (error) {
+      return { message: "ups " + error };
+    }
+  }
   //encuentra un carrito por su id
-  async findById(cid) {
+  async persistFindById(cid) {
     try {
       const cart = await cartsModel.findOne({ _id: cid });
-
-      if (cart == null) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
-      }
-      return {
-        status: 200,
-        message: cart.products,
-      };
+      console.log(cart, " esto es cart");
+      return cart;
     } catch (error) {
       throw new Error(error.message);
     }
   }
   // crea un carrito
-  async create() {
+  async persistCreate() {
     try {
       const cart = await cartsModel.create({ products: [] });
       return cart;
@@ -46,31 +83,19 @@ export default class cartsManager {
   }
 
   //elimina todos los carritos
-  async delete() {
+  async persistDelete() {
     try {
       await cartsModel.deleteMany();
-      return {
-        status: 204,
-        message: "carritos eliminados",
-      };
+      return "succes";
     } catch (error) {
       throw new Error(error.message);
     }
   }
   //elimina un carrito
-  async deleteById(cid) {
+  async persistDeleteById(cid) {
     try {
       const cart = await cartsModel.deleteOne({ _id: cid });
-      if (cart.deletedCount == 0) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
-      }
-      return {
-        status: 204,
-        message: `carrito ${cid} eliminado`,
-      };
+      return cart;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -79,34 +104,10 @@ export default class cartsManager {
   // METODOS PARA LOS PRODUCTOS DEL CARRITO
 
   //metodo para verificar existencia de los documentos en la collecion
-  async CheckDocument(cid, pid) {
-    const cart = await this.findById(cid);
-    const prod = await product.findById(pid);
-    if (!cart && !prod) {
-      throw new Error({
-        status: 404,
-        message: `El carrito con id ${cid} y el producto con id ${pid} no existen`,
-      });
-    }
-    if (!cart) {
-      throw new Error({
-        status: 404,
-        message: `El carrito con id ${cid} no existe`,
-      });
-    }
-    if (!prod) {
-      throw new Error({
-        status: 404,
-        message: `El producto con id ${pid} no existe`,
-      });
-    }
-    return true;
-  }
 
   //agrega productos al carrito
-  async addProdToCart(cid, pid) {
+  async persistAddProdToCart(cid, pid) {
     try {
-      await this.CheckDocument(cid, pid);
       /*si hay un documento con id:cid que contenga una propiedad products 
       que no contenga un campo product igual a pid*/
       const result = await cartsModel.updateOne(
@@ -121,6 +122,7 @@ export default class cartsManager {
           { $inc: { "products.$.qty": 1 } }
         );
       }
+      console.log("vamos pasandooooooooo");
       return {
         status: 204,
         message: `el producto ${pid} fue agregado a tu carrito`,
@@ -146,9 +148,8 @@ export default class cartsManager {
     }
   }
   // elimina un productos del carrito
-  async deleteProduct(cid, pid) {
+  async persistDeleteProduct(cid, pid) {
     try {
-      await this.CheckDocument(cid, pid);
       /*se busca un carrito por su id y de que este tenga una propiedad products 
       que contenga un campo product igual a pid, si este existe decrementa en 1*/
       await cartsModel.updateOne(
@@ -170,24 +171,14 @@ export default class cartsManager {
     }
   }
   //elimina todos los productos del carrito
-  async deleteAllProducts(cid) {
+  async persistDeleteAllProducts(cid) {
     try {
-      const cart = await cartsModel.findOne({ _id: cid });
-      if (cart == null) {
-        throw new Error({
-          status: 404,
-          message: `El carrito con id ${cid} no existe`,
-        });
-      } else {
-        const response = await cartsModel.updateOne(
-          { _id: cid },
-          { $set: { products: [] } }
-        );
-      }
-      return {
-        status: 204,
-        message: `todos los productos fueron eliminados del carrito`,
-      };
+      const response = await cartsModel.updateOne(
+        { _id: cid },
+        { $set: { products: [] } }
+      );
+
+      return response;
     } catch (error) {}
   }
 }

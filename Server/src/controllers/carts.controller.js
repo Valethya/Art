@@ -1,14 +1,23 @@
 import { Router } from "express";
-import cartsManager from "../dao/MongoManager/carts.mongoManager.js";
+import {
+  find,
+  findById,
+  create,
+  deleteById,
+  deleteCarts,
+  addProdToCart,
+  updateProducts,
+  deleteProduct,
+  deleteAllProducts,
+} from "../service/carts.service.js";
 
 const router = Router();
 
-const carts = new cartsManager();
 //REQ DE CARRITOS
 
 router.get("/", async (req, res) => {
   try {
-    const response = await carts.find();
+    const response = await find();
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });
@@ -18,7 +27,16 @@ router.get("/", async (req, res) => {
 router.get("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const response = await carts.findById(cid);
+    const response = await findById(cid);
+    res.json({ result: "succes", payload: response });
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+router.get("/summary/:cid", async (req, res) => {
+  try {
+    const { cid } = req.params;
+    const response = await carts.summaryCart(cid);
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });
@@ -27,7 +45,7 @@ router.get("/:cid", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const response = await carts.create();
+    const response = await create();
 
     res.json({ result: "succes", payload: response });
   } catch (error) {
@@ -37,7 +55,7 @@ router.post("/", async (req, res) => {
 //borra todos los carritos
 router.delete("/", async (req, res) => {
   try {
-    const response = await carts.delete();
+    const response = await deleteCarts();
     res.json({ result: "succes", payload: response });
   } catch (error) {
     res.json({ error: error.message });
@@ -60,7 +78,7 @@ router.post("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
     // const prodId = pid || data;
-    const response = await carts.addProdToCart(cid, pid);
+    const response = await addProdToCart(cid, pid);
 
     res.json({ result: "succes", payload: response });
   } catch (error) {
@@ -72,7 +90,7 @@ router.put("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
     const { qty } = req.body;
-    const response = await carts.updateProducts(cid, pid, qty);
+    const response = await updateProducts(cid, pid, qty);
     res.json({ response: response });
   } catch (error) {
     res.json({ error: error.message });
@@ -83,7 +101,7 @@ router.delete("/:cid/product/:pid", async (req, res) => {
   try {
     const { cid, pid } = req.params;
 
-    const response = await carts.deleteProduct(cid, pid);
+    const response = await deleteProduct(cid, pid);
 
     res.json({ result: "succes", payload: response });
   } catch (error) {
@@ -94,7 +112,7 @@ router.delete("/:cid/product/:pid", async (req, res) => {
 router.delete("/:cid", async (req, res) => {
   try {
     const { cid } = req.params;
-    const response = await carts.deleteAllProducts(cid);
+    const response = await deleteAllProducts(cid);
     res.json({ result: succes, payload: response });
   } catch (error) {
     res.json({ error: error.message });
